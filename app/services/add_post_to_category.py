@@ -1,31 +1,34 @@
 import falcon
+import base64
 import sys
 import psycopg2.extras
 from datetime import datetime
 from falcon.http_status import HTTPStatus
-from app.queries import QUERY_CHECK_CONNECTION, QUERY_REMOVE_POST_FROM_CATEGORY
+from app.queries import QUERY_CHECK_CONNECTION, QUERY_INSERT_POST_TO_CATEGORY
 
-class RemovePostService:
+class AddPostService:
 	def __init__(self, service):
-		print('Initializing Remove Post From Category Service...')
+		print('Initializing Add Post To Category Service...')
 		self.service = service
 
 	def on_post(self, req, resp):
 		con = self.service.dbconnection.connection
 		try:
-			print('HTTP POST: /remove_post_from_category')
+			print('HTTP POST: /add_post_to_category')
 			cursor = con.cursor()
 			print(req.media)
-			cursor.execute(QUERY_REMOVE_POST_FROM_CATEGORY, (
-				str(datetime.now()),
-				req.media['post_id'],
-				req.media['category_name']
+			cursor.execute(QUERY_INSERT_POST_TO_CATEGORY, (
+				req.media['username'],
+				req.media['category_name'],
+				req.media['content'],
+				req.media['zipcode'],
+				datetime.now(),
 				)
 			)
 			con.commit()
 
 			resp.status = falcon.HTTP_200
-			resp.media = 'Successful removed post from {}'.format(req.media['category_name'])
+			resp.media = 'Successful upload of post to {}'.format(req.media['category_name'])
 
 		except psycopg2.DatabaseError as e:
 			if con:

@@ -25,6 +25,7 @@ class DbConnection:
 
             self.connection = psycopg2.connect(host=self.config['host'],
                                                database=self.config['database'],
+											   port=self.config['port'],
                                                user=self.config['user'],
                                                password=self.config['password'])
         except Exception as e:
