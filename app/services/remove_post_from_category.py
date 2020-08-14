@@ -1,6 +1,7 @@
 import falcon
 import sys
 import psycopg2.extras
+import uuid
 from datetime import datetime
 from falcon.http_status import HTTPStatus
 from app.queries import QUERY_CHECK_CONNECTION, QUERY_REMOVE_POST_FROM_CATEGORY
@@ -30,8 +31,10 @@ class RemovePostService:
 		except psycopg2.DatabaseError as e:
 			if con:
 				con.rollback()
+			resp.status = falcon.HTTP_400
 			print ('Error %s' % e ) 
 			sys.exit(1)
-		finally: 
+		finally:
 			if cursor:
+				resp.status = falcon.HTTP_400
 				cursor.close()

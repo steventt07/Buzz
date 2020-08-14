@@ -16,8 +16,9 @@ VALUES ('What''s happening?', 'steventt07', NOW());
 INSERT INTO post_table(
         username,
         category_name,
+		title,
         content,
         zipcode,
         date_created
 	)
-VALUES ('steventt07', 'What''s happening?', 'My first post', '78703', NOW());
+VALUES ('steventt07', 'What''s happening?', 'DEALS!!!', 'My first post', '78703', NOW());

@@ -7,9 +7,11 @@ QUERY_GET_FEED = """
 		post_id,
 		username,
 		category_name,
+		title,
 		content,
 		comment_ids,
-		votes,
+		up_vote,
+		down_vote,
 		zipcode,
 		date_created
 	FROM 
@@ -24,9 +26,11 @@ QUERY_GET_CATEGORY = """
 		post_id,
 		username,
 		category_name,
+		title,
 		content,
 		comment_ids,
-		votes,
+		up_vote,
+		down_vote,
 		zipcode,
 		date_created
 	FROM 
@@ -41,9 +45,11 @@ QUERY_GET_DELETED_POST = """
 		post_id,
 		username,
 		category_name,
+		title,
 		content,
 		comment_ids,
-		votes,
+		up_vote,
+		down_vote,
 		zipcode,
 		date_created
 	FROM 
@@ -58,9 +64,11 @@ QUERY_GET_REPORTED_POST = """
 		post_id,
 		username,
 		category_name,
+		title,
 		content,
 		comment_ids,
-		votes,
+		up_vote,
+		down_vote,
 		zipcode,
 		date_created
 	FROM 
@@ -82,11 +90,12 @@ QUERY_INSERT_POST_TO_CATEGORY = """
 	INSERT INTO post_table(
 		username,
 		category_name,
+		title,
 		content,
 		zipcode,
 		date_created
 	)
-	VALUES (%s, %s, %s, %s, %s);
+	VALUES (%s, %s, %s, %s, %s, %s);
 """
 
 QUERY_INSERT_USER = """

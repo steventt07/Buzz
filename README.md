@@ -18,12 +18,13 @@ curl --location --request POST 'http://0.0.0.0:8000/add_post_to_category' \
     "username": "steventt07",
     "category_name": "What'\''s happening?",
     "content": "My thirs post",
+	"title": "Lalala",
     "zipcode": "78703"
 }'
 
 curl --location --request POST 'http://0.0.0.0:8000/remove_post_from_category' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "post_id": 2,
+    "post_id": "a6fd26ba-3cef-4734-9610-a6e4ac578d25",
     "category_name": "What'\''s happening?"
 }'

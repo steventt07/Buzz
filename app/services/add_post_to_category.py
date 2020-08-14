@@ -20,6 +20,7 @@ class AddPostService:
 			cursor.execute(QUERY_INSERT_POST_TO_CATEGORY, (
 				req.media['username'],
 				req.media['category_name'],
+				req.media['title'],
 				req.media['content'],
 				req.media['zipcode'],
 				datetime.now(),

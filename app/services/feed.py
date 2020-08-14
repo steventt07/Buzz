@@ -23,11 +23,13 @@ class FeedService:
 					'post_id': record[0],
 					'username': record[1],
 					'category_name': record[2],
-					'content': record[3],
-					'comments': record[4],
-					'votes': record[5],
-					'zipcode': record[6],
-					'date_created': str(record[7]),
+					'title': record[3],
+					'content': record[4],
+					'comments': record[5],
+					'up_vote': record[6],
+					'down_vote': record[7],
+					'zipcode': record[8],
+					'date_created': str(record[9]),
 				}
 			)
 
