@@ -35,6 +35,13 @@ paths:
             minimum: 1
             maximum: 5
             example: 2
+        - name: username
+          in: query
+          description: Current user 
+          required: true
+          schema:
+            type: string
+            example: johnDoe
       responses:
         200:
           description: Successful pull of feed info
@@ -44,18 +51,36 @@ paths:
                 type: array
                 items:
                   properties:
-                    id:
+                    post_id:
                       type: integer
                       example: 1
                     username:
                       type: string
                       example: steventt07
+                    category_name:
+                      type: string
+                      example: What's Happening?
+                    title:
+                      type: string
+                      example: Test
                     content: 
                       type: string
                       example: my first post
+                    votes:
+                      type: integer
+                      example: 4
+                    is_voted:
+                      type: boolean
+                      example: false
+                    prev_vote:
+                      type: integer
+                      example: 0
                     zipcode:
                       type: integer
                       example: 75094
+                    date_created:
+                      type: string
+                      example: "2020-08-26"
                     comments:
                       type: array
                       items:
@@ -67,12 +92,6 @@ paths:
     get:
       description: fetch catergory information
       parameters: 
-        - name: catergory
-          in: query
-          description: Name of catergory
-          schema:
-            type: string
-            example: Deals
         - name: bodyLimit
           in: query
           description: The amount of posts returned
@@ -89,6 +108,19 @@ paths:
             minimum: 1
             maximum: 5
             example: 2
+        - name: catergory
+          in: query
+          description: Name of catergory
+          schema:
+            type: string
+            example: Deals
+        - name: username
+          in: query
+          description: Current user 
+          required: true
+          schema:
+            type: string
+            example: johnDoe
       responses:
         200:
           description: Successful pull of catergory info
@@ -98,18 +130,36 @@ paths:
                 type: array
                 items:
                   properties:
-                    id:
+                    post_id:
                       type: integer
                       example: 1
                     username:
                       type: string
                       example: steventt07
+                    category_name:
+                      type: string
+                      example: What's Happening?
+                    title:
+                      type: string
+                      example: Test
                     content: 
                       type: string
                       example: my first post
+                    votes:
+                      type: integer
+                      example: 4
+                    is_voted:
+                      type: boolean
+                      example: false
+                    prev_vote:
+                      type: integer
+                      example: 0
                     zipcode:
                       type: integer
                       example: 75094
+                    date_created:
+                      type: string
+                      example: "2020-08-26"
                     comments:
                       type: array
                       items:
@@ -165,21 +215,55 @@ paths:
       responses:
         200:
           description: Successfully removed a post from a category
-                
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-            
+          
+  /vote:
+    post:
+      description: Vote on a post
+      requestBody:
+        required: true
+        content: 
+          application/json: 
+            schema:
+              type: object
+              properties:
+                post_id:
+                  type: integer
+                  example: 1
+                username:
+                  type: string
+                  example: johnDoe
+                direction:
+                  type: integer
+                  example: 0
+                global_direction:
+                  type: integer
+                  example: 1
+                is_voted:
+                  type: boolean
+                  example: false
+      responses:
+        200:
+          description: Successfully voted on a post
+          
+  /comment:
+    post:
+      description: Comment on a post
+      requestBody:
+        required: true
+        content: 
+          application/json: 
+            schema:
+              type: object
+              properties:
+                post_id:
+                  type: integer
+                  example: 1
+                username:
+                  type: string
+                  example: johnDoe
+                content:
+                  type: string
+                  example: I'll have to check that out!
+      responses:
+        200:
+          description: Successfully commented on a post
