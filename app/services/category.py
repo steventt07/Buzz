@@ -14,7 +14,7 @@ class CategoryService:
 	def on_get(self, req, resp):
 		print('HTTP GET: /category')
 		cursor = self.service.dbconnection.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-		cursor.execute(QUERY_GET_CATEGORY, (req.params['category_name'], req.params['zipcode']))
+		cursor.execute(QUERY_GET_CATEGORY, (req.params['username'], req.params['category_name'], req.params['zipcode']))
 		response = []
 		for record in cursor:
 			print(record)
@@ -25,11 +25,12 @@ class CategoryService:
 					'category_name': record[2],
 					'title': record[3],
 					'content': record[4],
-					'comments': record[5],
-					'up_vote': record[6],
-					'down_vote': record[7],
+					'votes': record[5],
+					'is_voted': record[6],
+					'prev_vote': record[7],
 					'zipcode': record[8],
 					'date_created': str(record[9]),
+					'comments': record[10]
 				}
 			)
 

@@ -6,6 +6,8 @@ from app.services.add_post_to_category import AddPostService
 from app.services.remove_post_from_category import RemovePostService
 from app.services.feed import FeedService
 from app.services.category import CategoryService
+from app.services.vote import VoteService
+from app.services.comment import CommentService
 
 
 class Service:
@@ -19,12 +21,16 @@ def start_service():
 	remove_post_service = RemovePostService(service)
 	feed_service = FeedService(service)
 	category_service = CategoryService(service)
+	vote_service = VoteService(service)
+	comment_service = CommentService(service)
 
 	app = falcon.API(middleware=[HandleCORS()])
 	app.add_route('/add_post_to_category', add_post_service)
 	app.add_route('/remove_post_from_category', remove_post_service)
 	app.add_route('/feed', feed_service)
 	app.add_route('/category', category_service)
+	app.add_route('/vote', vote_service)
+	app.add_route('/comment', comment_service)
 	return app
 
 class HandleCORS(object):
