@@ -149,7 +149,7 @@ INSERT INTO post_table(
         zipcode,
         date_created
 	)
-VALUES ('steventt07', 'Recreation', 'LS!!!', 'Paddle board place at Austin High School is open', NOW());
+VALUES ('steventt07', 'Recreation', 'LS!!!', 'Paddle board place at Austin High School is open', '78703', NOW());
 
 INSERT INTO post_table(
         username,
