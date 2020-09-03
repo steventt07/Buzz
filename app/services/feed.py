@@ -20,7 +20,7 @@ class FeedService:
 		for record in cursor:
 			response.append(
 				{
-					'post_id': record[0],
+					'id': record[0],
 					'username': record[1],
 					'category_name': record[2],
 					'title': record[3],
@@ -35,5 +35,5 @@ class FeedService:
 			)
 
 		resp.status = falcon.HTTP_200
-		resp.media = { 'feed': response}
+		resp.media = response
 		cursor.close()
