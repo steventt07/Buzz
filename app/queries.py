@@ -96,6 +96,7 @@ QUERY_GET_REPORTED_POST = """
 QUERY_GET_USER = """
 	SELECT
 		username,
+		email,
 		date_joined
 	FROM
 		user_table
@@ -117,9 +118,10 @@ QUERY_INSERT_USER = """
 	INSERT INTO user_table(
 		username,
 		password,
+		email,
 		date_joined
 	)
-	VALUES (%s, %s, %s);
+	VALUES (%s, %s, %s, %s);
 """
 
 QUERY_INSERT_CATEGORY = """

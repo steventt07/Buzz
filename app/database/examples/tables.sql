@@ -3,20 +3,13 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS user_table(
 	username VARCHAR(256) PRIMARY KEY,
 	password VARCHAR(256) NOT NULL,
+	email VARCHAR(256) NOT NULL,
 	date_joined DATE
 );
 
 CREATE TABLE IF NOT EXISTS category_table(
 	category_name VARCHAR(256) PRIMARY KEY,
 	owner_username VARCHAR(256) REFERENCES user_table,
-	date_created DATE
-);
-
-CREATE TABLE IF NOT EXISTS comment_table(
-	comment_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-	post_id uuid REFERENCES post_table,
-	username VARCHAR(256) REFERENCES user_table,
-	content TEXT,
 	date_created DATE
 );
 
@@ -34,6 +27,14 @@ CREATE TABLE IF NOT EXISTS post_table(
 	is_reported BOOLEAN DEFAULT false,
 	is_edited BOOLEAN DEFAULT false,
 	date_edited DATE
+);
+
+CREATE TABLE IF NOT EXISTS comment_table(
+	comment_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+	post_id uuid REFERENCES post_table,
+	username VARCHAR(256) REFERENCES user_table,
+	content TEXT,
+	date_created DATE
 );
 
 CREATE TABLE IF NOT EXISTS vote_table(

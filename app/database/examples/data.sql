@@ -1,9 +1,10 @@
 INSERT INTO user_table(
         username,
         password,
+		email,
         date_joined
 	)
-VALUES ('steventt07', 'password', NOW());
+VALUES ('steventt07', 'password', 'test@gmail.com', NOW());
 
 
 INSERT INTO category_table(

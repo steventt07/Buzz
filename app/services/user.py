@@ -19,7 +19,9 @@ class UseryService:
 			response.append(
 				{
 					'username': record[0],
-					'date_joined': record[1]
+					'email': record[1],
+					'date_joined': record[2]
+					
 				}
 			)
 
@@ -36,6 +38,7 @@ class UseryService:
 			cursor.execute(QUERY_INSERT_USER, (
 				req.media['username'],
 				req.media['password'],
+				req.media['email'],
 				datetime.now()
 				)
 			)
