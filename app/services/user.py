@@ -5,7 +5,7 @@ from datetime import datetime
 from falcon.http_status import HTTPStatus
 from app.queries import QUERY_CHECK_CONNECTION, QUERY_GET_USER, QUERY_INSERT_USER
 
-class UseryService:
+class UserService:
 	def __init__(self, service):
 		print('Initializing User Service...')
 		self.service = service
@@ -45,6 +45,7 @@ class UseryService:
 			con.commit()
 
 			resp.status = falcon.HTTP_200
+			resp.media = 'Successful creation of user: {}'.format(req.media['username'])
 
 		except psycopg2.DatabaseError as e:
 			if con:
