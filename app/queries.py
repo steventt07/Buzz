@@ -100,6 +100,9 @@ QUERY_GET_USER = """
 		date_joined
 	FROM
 		user_table
+	WHERE 
+		username = %s AND password = %s;
+		
 """
 
 QUERY_INSERT_POST_TO_CATEGORY = """
