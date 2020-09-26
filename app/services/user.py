@@ -13,14 +13,14 @@ class UserService:
 	def on_get(self, req, resp):
 		print('HTTP GET: /user')
 		cursor = self.service.dbconnection.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
-		cursor.execute(QUERY_GET_USER)
+		cursor.execute(QUERY_GET_USER, (req.params['username'], req.params['password']))
 		response = []
 		for record in cursor:
 			response.append(
 				{
 					'username': record[0],
 					'email': record[1],
-					'date_joined': record[2]
+					'date_joined': str(record[2])
 					
 				}
 			)
