@@ -24,9 +24,12 @@ class UserService:
 					
 				}
 			)
-
-		resp.status = falcon.HTTP_200
-		resp.media = { 'user': response}
+		
+		if len(response) == 0:
+			resp.status = falcon.HTTP_400
+		else:
+			resp.status = falcon.HTTP_200
+			resp.media = { 'user': response}
 		cursor.close()
 		
 	def on_post(self, req, resp):

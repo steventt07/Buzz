@@ -105,6 +105,19 @@ QUERY_GET_USER = """
 		
 """
 
+QUERY_GET_COMMENT = """
+	SELECT
+		comment_id,
+		username,
+		content,
+		date_created
+	FROM
+		comment_table
+	WHERE 
+		post_id = %s;
+		
+"""
+
 QUERY_INSERT_POST_TO_CATEGORY = """
 	INSERT INTO post_table(
 		username,
