@@ -30,7 +30,7 @@ class CommentService:
 			resp.status = falcon.HTTP_400
 		else:
 			resp.status = falcon.HTTP_200
-			resp.media = { 'comment': response}
+			resp.media = response
 		cursor.close()
 		
 	def on_post(self, req, resp):
