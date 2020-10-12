@@ -18,7 +18,7 @@ class CommentService:
 		for record in cursor:
 			response.append(
 				{
-					'comment_id': record[0],
+					'id': record[0],
 					'username': record[1],
 					'content': record[2],
 					'date_created': str(record[3])
@@ -26,11 +26,8 @@ class CommentService:
 				}
 			)
 		
-		if len(response) == 0:
-			resp.status = falcon.HTTP_400
-		else:
-			resp.status = falcon.HTTP_200
-			resp.media = response
+		resp.status = falcon.HTTP_200
+		resp.media = response
 		cursor.close()
 		
 	def on_post(self, req, resp):
