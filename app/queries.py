@@ -11,7 +11,7 @@ QUERY_GET_FEED = """
 		post_table.content,
 		post_table.votes,
 		CASE WHEN vote_table.direction is NULL THEN false ELSE true END AS is_voted,
-		vote_table.direction,
+		CASE WHEN vote_table.direction is NULL THEN 0 ELSE vote_table.direction END AS prev_vote,
 		post_table.zipcode,
 		post_table.date_created,
 		COALESCE(x.cnt,0) AS comments
