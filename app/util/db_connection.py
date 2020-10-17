@@ -7,7 +7,7 @@ class DbConnection:
     def __init__(self, config_file):
         self.config = self.load_configuration(config_file)
         self.connection = None
-        self.init_db_connection()
+        #self.init_db_connection()
 
     def load_configuration(self, config_file):
         print('Loading db configuration...')

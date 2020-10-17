@@ -11,6 +11,7 @@ class VoteService:
 		self.service = service
 		
 	def on_post(self, req, resp):
+		self.service.dbconnection.init_db_connection()
 		con = self.service.dbconnection.connection
 		try:
 			print('HTTP POST: /vote')

@@ -13,7 +13,7 @@ from app.services.user import UserService
 
 class Service:
 	def __init__(self):
-		print('Initializing Chart Service...')
+		print('Initializing Bubble Service...')
 		self.dbconnection = DbConnection('db_credentials.yaml')
 
 def start_service():

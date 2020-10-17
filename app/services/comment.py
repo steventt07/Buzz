@@ -12,6 +12,8 @@ class CommentService:
 	
 	def on_get(self, req, resp):
 		print('HTTP GET: /comment')
+		
+		self.service.dbconnection.init_db_connection()
 		cursor = self.service.dbconnection.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 		cursor.execute(QUERY_GET_COMMENT, (req.params['post_id'], ))
 		response = []
@@ -25,12 +27,13 @@ class CommentService:
 					
 				}
 			)
+		cursor.close()
 		
 		resp.status = falcon.HTTP_200
 		resp.media = response
-		cursor.close()
 		
 	def on_post(self, req, resp):
+		self.service.dbconnection.init_db_connection()
 		con = self.service.dbconnection.connection
 		try:
 			print('HTTP POST: /comment')
@@ -58,3 +61,5 @@ class CommentService:
 		finally: 
 			if cursor:
 				cursor.close()
+			if con:
+				con.close()

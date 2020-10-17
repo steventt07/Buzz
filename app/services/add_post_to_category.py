@@ -12,11 +12,13 @@ class AddPostService:
 		self.service = service
 
 	def on_post(self, req, resp):
+		self.service.dbconnection.init_db_connection()
 		con = self.service.dbconnection.connection
+		
 		try:
 			print('HTTP POST: /add_post_to_category')
-			cursor = con.cursor()
 			print(req.media)
+			cursor = con.cursor()
 			cursor.execute(QUERY_INSERT_POST_TO_CATEGORY, (
 				req.media['username'],
 				req.media['category_name'],
@@ -27,6 +29,7 @@ class AddPostService:
 				)
 			)
 			con.commit()
+			cursor.close()
 
 			resp.status = falcon.HTTP_200
 			resp.media = 'Successful upload of post to {}'.format(req.media['category_name'])
@@ -39,3 +42,5 @@ class AddPostService:
 		finally: 
 			if cursor:
 				cursor.close()
+			if con: 
+				con.close()

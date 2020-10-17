@@ -13,7 +13,10 @@ class CategoryService:
 
 	def on_get(self, req, resp):
 		print('HTTP GET: /category')
-		cursor = self.service.dbconnection.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+		
+		self.service.dbconnection.init_db_connection()
+		con = self.service.dbconnection.connection
+		cursor = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
 		cursor.execute(QUERY_GET_CATEGORY, (req.params['username'], req.params['category_name'], req.params['zipcode']))
 		response = []
 		for record in cursor:
@@ -33,7 +36,8 @@ class CategoryService:
 					'comments': record[10]
 				}
 			)
-
+		cursor.close()
+		con.close()
+		
 		resp.status = falcon.HTTP_200
 		resp.media = { 'category': response}
-		cursor.close()

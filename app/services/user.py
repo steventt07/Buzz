@@ -12,6 +12,8 @@ class UserService:
 
 	def on_get(self, req, resp):
 		print('HTTP GET: /user')
+		
+		self.service.dbconnection.init_db_connection()
 		cursor = self.service.dbconnection.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 		cursor.execute(QUERY_GET_USER, (req.params['username'], req.params['password']))
 		response = []
@@ -24,15 +26,16 @@ class UserService:
 					
 				}
 			)
+		cursor.close()
 		
 		if len(response) == 0:
 			resp.status = falcon.HTTP_400
 		else:
 			resp.status = falcon.HTTP_200
 			resp.media = { 'user': response}
-		cursor.close()
 		
 	def on_post(self, req, resp):
+		self.service.dbconnection.init_db_connection()
 		con = self.service.dbconnection.connection
 		try:
 			print('HTTP POST: /user')
@@ -58,3 +61,5 @@ class UserService:
 		finally: 
 			if cursor:
 				cursor.close()
+			if con:
+				con.close()
