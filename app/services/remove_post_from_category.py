@@ -20,7 +20,7 @@ class RemovePostService:
 			
 			cursor = con.cursor()
 			cursor.execute(QUERY_REMOVE_POST_FROM_CATEGORY, (
-				str(datetime.now()),
+				str(datetime.now(tz=timezone.utc)),
 				req.media['post_id'],
 				req.media['category_name']
 				)

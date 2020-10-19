@@ -1,7 +1,7 @@
 import falcon
 import sys
 import psycopg2.extras
-from datetime import datetime
+from datetime import datetime, timezone
 from falcon.http_status import HTTPStatus
 from app.queries import QUERY_CHECK_CONNECTION, QUERY_INSERT_VOTE, QUERY_UPDATE_VOTE, QUERY_UPVOTE_DOWNVOTE_POST
 
@@ -23,13 +23,13 @@ class VoteService:
 						req.media['post_id'],
 						req.media['username'],
 						req.media['direction'],
-						datetime.now()
+						datetime.now(tz=timezone.utc)
 					)
 				)
 			else:
 				cursor.execute(QUERY_UPDATE_VOTE, (
 					req.media['direction'],
-					datetime.now(),
+					datetime.now(tz=timezone.utc),
 					req.media['post_id'],
 					req.media['username']
 					)

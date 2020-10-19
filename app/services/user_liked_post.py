@@ -4,26 +4,27 @@ import sys
 import psycopg2.extras
 from datetime import datetime, timezone
 from falcon.http_status import HTTPStatus
-from app.queries import QUERY_CHECK_CONNECTION, QUERY_GET_CATEGORY
+from app.queries import QUERY_CHECK_CONNECTION, QUERY_GET_USER_LIKED_POST
 
-class CategoryService:
+class UserLikedPost:
 	def __init__(self, service):
-		print('Initializing Category Service...')
+		print('Initializing User Liked Post Service...')
 		self.service = service
 
 	def on_get(self, req, resp):
-		print('HTTP GET: /category')
+		print('HTTP GET: /user_liked_post')
+		print(req.params)
 		
 		self.service.dbconnection.init_db_connection()
 		con = self.service.dbconnection.connection
 		cursor = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
-		cursor.execute(QUERY_GET_CATEGORY, (req.params['username'], req.params['category_name'], req.params['zipcode']))
+		cursor.execute(QUERY_GET_USER_LIKED_POST, (req.params['username'], ))
+		
 		response = []
 		for record in cursor:
-			print(record)
 			response.append(
 				{
-					'post_id': record[0],
+					'id': record[0],
 					'username': record[1],
 					'category_name': record[2],
 					'title': record[3],
@@ -36,8 +37,9 @@ class CategoryService:
 					'comments': record[10]
 				}
 			)
+			
 		cursor.close()
 		con.close()
 		
 		resp.status = falcon.HTTP_200
-		resp.media = { 'category': response}
+		resp.media = response

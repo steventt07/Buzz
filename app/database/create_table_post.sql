@@ -5,10 +5,12 @@ CREATE TABLE IF NOT EXISTS post_table(
 	title varchar(256),
 	content TEXT,
 	zipcode varchar(256),
-	date_created DATE,
+	latitude REAL,
+	longitubde REAL,
+	date_created timestamptz,
 	votes INTEGER DEFAULT 0,
 	is_deleted BOOLEAN DEFAULT false,
 	is_reported BOOLEAN DEFAULT false,
 	is_edited BOOLEAN DEFAULT false,
-	date_edited DATE
+	date_edited timestamptz
 );

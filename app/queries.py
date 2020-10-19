@@ -26,6 +26,30 @@ QUERY_GET_FEED = """
 		date_created DESC;
 """
 
+QUERY_GET_USER_LIKED_POST = """
+	SELECT 
+		post_table.post_id,
+		post_table.username,
+		post_table.category_name,
+		post_table.title,
+		post_table.content,
+		post_table.votes,
+		CASE WHEN vote_table.direction is NULL THEN false ELSE true END AS is_voted,
+		CASE WHEN vote_table.direction is NULL THEN 0 ELSE vote_table.direction END AS prev_vote,
+		post_table.zipcode,
+		post_table.date_created,
+		COALESCE(x.cnt,0) AS comments
+	FROM 
+		post_table
+	INNER JOIN 
+		vote_table
+	ON 
+		post_table.post_id = vote_table.post_id
+	LEFT OUTER JOIN 
+			(SELECT post_id, count(*) cnt FROM comment_table GROUP BY post_id) x ON post_table.post_id = x.post_id
+	WHERE vote_table.username = %s;
+"""
+
 QUERY_GET_CATEGORY = """
 	SELECT 
 		post_table.post_id,
