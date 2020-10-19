@@ -1,7 +1,7 @@
 import falcon
 import sys
 import psycopg2.extras
-from datetime import datetime
+from datetime import datetime, timezone
 from falcon.http_status import HTTPStatus
 from app.queries import QUERY_CHECK_CONNECTION, QUERY_INSERT_COMMENT, QUERY_GET_COMMENT
 
@@ -12,7 +12,10 @@ class CommentService:
 	
 	def on_get(self, req, resp):
 		print('HTTP GET: /comment')
-		cursor = self.service.dbconnection.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+		
+		self.service.dbconnection.init_db_connection()
+		con = self.service.dbconnection.connection
+		cursor = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
 		cursor.execute(QUERY_GET_COMMENT, (req.params['post_id'], ))
 		response = []
 		for record in cursor:
@@ -25,12 +28,14 @@ class CommentService:
 					
 				}
 			)
+		cursor.close()
+		con.close()
 		
 		resp.status = falcon.HTTP_200
 		resp.media = response
-		cursor.close()
 		
 	def on_post(self, req, resp):
+		self.service.dbconnection.init_db_connection()
 		con = self.service.dbconnection.connection
 		try:
 			print('HTTP POST: /comment')
@@ -41,7 +46,7 @@ class CommentService:
 					req.media['post_id'],
 					req.media['username'],
 					req.media['content'],
-					datetime.now()
+					datetime.now(tz=timezone.utc)
 				)
 			)
 				
@@ -58,3 +63,5 @@ class CommentService:
 		finally: 
 			if cursor:
 				cursor.close()
+			if con:
+				con.close()

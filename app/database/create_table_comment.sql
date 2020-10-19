@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS comment_table(
 	post_id uuid REFERENCES post_table,
 	username VARCHAR(256) REFERENCES user_table,
 	content TEXT,
-	date_created DATE
+	date_created timestamptz
 );

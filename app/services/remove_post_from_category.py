@@ -12,13 +12,15 @@ class RemovePostService:
 		self.service = service
 
 	def on_post(self, req, resp):
+		self.service.dbconnection.init_db_connection()
 		con = self.service.dbconnection.connection
 		try:
 			print('HTTP POST: /remove_post_from_category')
-			cursor = con.cursor()
 			print(req.media)
+			
+			cursor = con.cursor()
 			cursor.execute(QUERY_REMOVE_POST_FROM_CATEGORY, (
-				str(datetime.now()),
+				str(datetime.now(tz=timezone.utc)),
 				req.media['post_id'],
 				req.media['category_name']
 				)
@@ -38,3 +40,5 @@ class RemovePostService:
 			if cursor:
 				resp.status = falcon.HTTP_400
 				cursor.close()
+			if con:
+				con.close()

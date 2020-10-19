@@ -3,6 +3,6 @@ CREATE TABLE IF NOT EXISTS vote_table(
 	post_id uuid REFERENCES post_table,
 	username VARCHAR(256) REFERENCES user_table,
 	direction INT NOT NULL,
-	date_created DATE NOT NULL,
-	date_changed DATE
+	date_created timestamptz NOT NULL,
+	date_changed timestamptz
 );
