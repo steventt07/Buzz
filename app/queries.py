@@ -155,9 +155,11 @@ QUERY_INSERT_POST_TO_CATEGORY = """
 		title,
 		content,
 		zipcode,
+		latitude,
+		longitude,
 		date_created
 	)
-	VALUES (%s, %s, %s, %s, %s, %s);
+	VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
 """
 
 QUERY_INSERT_USER = """

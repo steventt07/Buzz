@@ -20,6 +20,8 @@ class FeedService:
 		cursor = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
 		cursor.execute(QUERY_GET_FEED, (req.params['username'], req.params['zipcode']))
 		
+		# anchorPoint = getAnchorPoint(req.params['longitude'], req.params['latitude'])
+		
 		response = []
 		for record in cursor:
 			response.append(
@@ -43,3 +45,9 @@ class FeedService:
 		
 		resp.status = falcon.HTTP_200
 		resp.media = response
+		
+	
+	# Find out clostest anchor point from the users current position
+	def getAnchorPoint(longitude, latitude):
+		return True
+		

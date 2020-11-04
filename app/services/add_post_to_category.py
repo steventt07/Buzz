@@ -2,6 +2,7 @@ import falcon
 import base64
 import sys
 import psycopg2.extras
+from decimal import Decimal
 from datetime import datetime, timezone
 from falcon.http_status import HTTPStatus
 from app.queries import QUERY_CHECK_CONNECTION, QUERY_INSERT_POST_TO_CATEGORY
@@ -25,6 +26,8 @@ class AddPostService:
 				req.media['title'],
 				req.media['content'],
 				req.media['zipcode'],
+				Decimal(req.media['latitude']),
+				Decimal(req.media['longitude']),
 				datetime.now(tz=timezone.utc)
 				)
 			)
