@@ -25,7 +25,6 @@ class AddPostService:
 				req.media['category_name'],
 				req.media['title'],
 				req.media['content'],
-				req.media['zipcode'],
 				Decimal(req.media['latitude']),
 				Decimal(req.media['longitude']),
 				datetime.now(tz=timezone.utc)

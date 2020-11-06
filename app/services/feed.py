@@ -18,12 +18,21 @@ class FeedService:
 		self.service.dbconnection.init_db_connection()
 		con = self.service.dbconnection.connection
 		cursor = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
-		cursor.execute(QUERY_GET_FEED, (req.params['username'], req.params['zipcode']))
+		cursor.execute(QUERY_GET_FEED, (req.params['username'],))
 		
 		# anchorPoint = getAnchorPoint(req.params['longitude'], req.params['latitude'])
-		
+			
 		response = []
 		for record in cursor:
+			if record[5] is None:
+				latitude = 0.0
+			else:
+				latitude = record[5]
+				
+			if record[6] is None:
+				longitude = 0.0
+			else:
+				longitude = record[6]
 			response.append(
 				{
 					'id': record[0],
@@ -31,12 +40,13 @@ class FeedService:
 					'category_name': record[2],
 					'title': record[3],
 					'content': record[4],
-					'votes': record[5],
-					'is_voted': record[6],
-					'prev_vote': record[7],
-					'zipcode': record[8],
-					'date_created': str(record[9]),
-					'comments': record[10]
+					'latitude': latitude,
+					'longitude': longitude,
+					'votes': record[7],
+					'is_voted': record[8],
+					'prev_vote': record[9],
+					'date_created': str(record[10]),
+					'comments': record[11]
 				}
 			)
 			
