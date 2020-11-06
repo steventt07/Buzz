@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS post_table(
 	category_name VARCHAR(256) REFERENCES category_table,
 	title varchar(256),
 	content TEXT,
-	zipcode varchar(256),
 	latitude REAL,
 	longitubde REAL,
 	date_created timestamptz,

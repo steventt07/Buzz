@@ -9,10 +9,11 @@ QUERY_GET_FEED = """
 		post_table.category_name,
 		post_table.title,
 		post_table.content,
+		post_table.latitude,
+		post_table.longitude,
 		post_table.votes,
 		CASE WHEN vote_table.direction is NULL THEN false ELSE true END AS is_voted,
 		CASE WHEN vote_table.direction is NULL THEN 0 ELSE vote_table.direction END AS prev_vote,
-		post_table.zipcode,
 		post_table.date_created,
 		COALESCE(x.cnt,0) AS comments
 	FROM 
@@ -21,7 +22,7 @@ QUERY_GET_FEED = """
         vote_table on vote_table.post_id = post_table.post_id AND vote_table.username = %s
 	LEFT OUTER JOIN 
 		(SELECT post_id, count(*) cnt FROM comment_table GROUP BY post_id) x ON post_table.post_id = x.post_id
-	WHERE zipcode = %s AND is_deleted = false AND is_reported = false
+	WHERE is_deleted = false AND is_reported = false
 	ORDER BY
 		date_created DESC;
 """
@@ -33,10 +34,11 @@ QUERY_GET_USER_LIKED_POST = """
 		post_table.category_name,
 		post_table.title,
 		post_table.content,
+		post_table.latitude,
+		post_table.longitude,
 		post_table.votes,
 		CASE WHEN vote_table.direction is NULL THEN false ELSE true END AS is_voted,
 		CASE WHEN vote_table.direction is NULL THEN 0 ELSE vote_table.direction END AS prev_vote,
-		post_table.zipcode,
 		post_table.date_created,
 		COALESCE(x.cnt,0) AS comments
 	FROM 
@@ -57,11 +59,11 @@ QUERY_GET_CATEGORY = """
 		post_table.category_name,
 		post_table.title,
 		post_table.content,
-		post_table.comment_ids,
+		post_table.latitude,
+		post_table.longitude,
 		post_table.votes,
 		CASE WHEN vote_table.direction is NULL THEN false ELSE true END AS is_voted,
-		vote_table.direction,
-		post_table.zipcode,
+		CASE WHEN vote_table.direction is NULL THEN 0 ELSE vote_table.direction END AS prev_vote,
 		post_table.date_created,
 		COALESCE(x.cnt,0) AS comments
 	FROM 
@@ -70,7 +72,7 @@ QUERY_GET_CATEGORY = """
         vote_table on vote_table.post_id = post_table.post_id AND vote_table.username = %s
 	LEFT OUTER JOIN 
 		(SELECT post_id, count(*) cnt FROM comment_table GROUP BY post_id) x ON post_table.post_id = x.post_id
-	WHERE category_name = %s AND zipcode = %s AND is_deleted = false AND is_reported = false
+	WHERE category_name = %s AND is_deleted = false AND is_reported = false
 	ORDER BY
 		date_created DESC;
 """
@@ -82,10 +84,11 @@ QUERY_GET_DELETED_POST = """
 		post_table.category_name,
 		post_table.title,
 		post_table.content,
+		post_table.latitude,
+		post_table.longitude,
 		post_table.votes,
 		CASE WHEN vote_table.direction is NULL THEN false ELSE true END AS is_voted,
 		vote_table.direction,
-		post_table.zipcode,
 		post_table.date_created,
 		COALESCE(x.cnt,0) AS comments
 	FROM 
@@ -106,10 +109,11 @@ QUERY_GET_REPORTED_POST = """
 		post_table.category_name,
 		post_table.title,
 		post_table.content,
+		post_table.latitude,
+		post_table.longitude,
 		post_table.votes,
 		CASE WHEN vote_table.direction is NULL THEN false ELSE true END AS is_voted,
 		vote_table.direction,
-		post_table.zipcode,
 		post_table.date_created,
 		COALESCE(x.cnt,0) AS comments
 	FROM 
@@ -154,12 +158,11 @@ QUERY_INSERT_POST_TO_CATEGORY = """
 		category_name,
 		title,
 		content,
-		zipcode,
 		latitude,
 		longitude,
 		date_created
 	)
-	VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
+	VALUES (%s, %s, %s, %s, %s, %s, %s);
 """
 
 QUERY_INSERT_USER = """
@@ -234,10 +237,11 @@ QUERY_SELECT_FEED_COMMENTS = """
 		post_table.category_name,
 		post_table.title,
 		post_table.content,
+		post_table.latitude,
+		post_table.longitude,
 		post_table.votes,
 		CASE WHEN vote_table.direction is NULL THEN false ELSE true END AS is_voted,
 		vote_table.direction,
-		post_table.zipcode,
 		post_table.date_created,
 		post_table.comment_ids,
 		COALESCE(x.cnt,0) AS comment_count
@@ -247,7 +251,7 @@ QUERY_SELECT_FEED_COMMENTS = """
         vote_table on vote_table.post_id = post_table.post_id AND vote_table.username = 'steventt07'
 	LEFT OUTER JOIN 
 		(SELECT post_id, count(*) cnt FROM comment_table GROUP BY post_id) x ON post_table.post_id = x.post_id
-	WHERE zipcode = '78703' AND is_deleted = false AND is_reported = false
+	WHERE is_deleted = false AND is_reported = false
 	ORDER BY
 		date_created DESC;
 """
