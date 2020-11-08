@@ -14,11 +14,15 @@ class CategoryService:
 	def on_get(self, req, resp):
 		print('HTTP GET: /category')
 		
+		if req.params['category_name'] == "What's_Happening?":
+			req.params['category_name'] = "What's happening?"
+		elif req.params['category_name'] == "Happy_Hour":
+			req.params['category_name'] = "Happy Hour"
 		self.service.dbconnection.init_db_connection()
 		con = self.service.dbconnection.connection
 		cursor = con.cursor(cursor_factory=psycopg2.extras.DictCursor)
 		cursor.execute(QUERY_GET_CATEGORY, (req.params['username'], req.params['category_name']))
-			
+		
 		response = []
 		for record in cursor:
 			if record[5] is None:
