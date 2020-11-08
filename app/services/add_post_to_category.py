@@ -19,6 +19,12 @@ class AddPostService:
 		try:
 			print('HTTP POST: /add_post_to_category')
 			print(req.media)
+			
+			if req.media['category_name'] == "What's_Happening?":
+				req.media['category_name'] = "What's happening?"
+			elif req.media['category_name'] == "Happy_Hour":
+				req.media['category_name'] = "Happy Hour"
+			
 			cursor = con.cursor()
 			cursor.execute(QUERY_INSERT_POST_TO_CATEGORY, (
 				req.media['username'],

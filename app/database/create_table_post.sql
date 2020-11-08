@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS post_table(
 	title varchar(256),
 	content TEXT,
 	latitude REAL,
-	longitubde REAL,
+	longitude REAL,
 	date_created timestamptz,
 	votes INTEGER DEFAULT 0,
 	is_deleted BOOLEAN DEFAULT false,
