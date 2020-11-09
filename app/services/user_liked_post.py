@@ -29,6 +29,8 @@ class UserLikedPost:
 				
 			if record[6] is None:
 				longitude = 0.0
+			else:
+				longitude = record[6]
 			response.append(
 				{
 					'id': record[0],

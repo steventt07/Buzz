@@ -12,7 +12,7 @@ INSERT INTO category_table(
         owner_username,
         date_created
 	)
-VALUES ('What''s happening?', 'steventt07', NOW());
+VALUES ('What''s happening?', 'admin', NOW());
 
 INSERT INTO category_table(
         category_name,
