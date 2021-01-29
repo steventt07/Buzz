@@ -4,7 +4,7 @@ INSERT INTO user_table(
 		email,
         date_joined
 	)
-VALUES ('steventt07', 'password', 'test@gmail.com', NOW());
+VALUES ('admin', 'password', 'test@gmail.com', NOW());
 
 
 INSERT INTO category_table(
@@ -19,28 +19,28 @@ INSERT INTO category_table(
         owner_username,
         date_created
 	)
-VALUES ('Deals', 'steventt07', NOW());
+VALUES ('Deals', 'admin', NOW());
 
 INSERT INTO category_table(
         category_name,
         owner_username,
         date_created
 	)
-VALUES ('Misc', 'steventt07', NOW());
+VALUES ('Misc', 'admin', NOW());
 
 INSERT INTO category_table(
         category_name,
         owner_username,
         date_created
 	)
-VALUES ('Happy Hour', 'steventt07', NOW());
+VALUES ('Happy Hour', 'admin', NOW());
 
 INSERT INTO category_table(
         category_name,
         owner_username,
         date_created
 	)
-VALUES ('Recreation', 'steventt07', NOW());
+VALUES ('Recreation', 'admin', NOW());
 
 INSERT INTO post_table(
         username,

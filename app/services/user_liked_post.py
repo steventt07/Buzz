@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from falcon.http_status import HTTPStatus
 from app.queries import QUERY_CHECK_CONNECTION, QUERY_GET_USER_LIKED_POST
 
-class UserLikedPost:
+class UserLikedPostService:
 	def __init__(self, service):
 		print('Initializing User Liked Post Service...')
 		self.service = service
