@@ -2,6 +2,7 @@ import falcon
 import logging
 from falcon.http_status import HTTPStatus
 from app.util.db_connection import DbConnection
+from app.util.email_server import EmailServer
 from app.services.add_post_to_category import AddPostService
 from app.services.remove_post_from_category import RemovePostService
 from app.services.feed import FeedService
@@ -9,13 +10,15 @@ from app.services.category import CategoryService
 from app.services.vote import VoteService
 from app.services.comment import CommentService
 from app.services.user import UserService
-from app.services.user_liked_post import UserLikedPost
+from app.services.user_liked_post import UserLikedPostService
+from app.services.email_validation import EmailValidationService
 
 
 class Service:
 	def __init__(self):
 		print('Initializing Bubble Service...')
 		self.dbconnection = DbConnection('db_credentials.yaml')
+		self.email_server = EmailServer('email_credentials.yaml')
 
 def start_service():
 	service = Service()
@@ -26,7 +29,8 @@ def start_service():
 	vote_service = VoteService(service)
 	comment_service = CommentService(service)
 	user_service = UserService(service)
-	user_liked_post_service = UserLikedPost(service)
+	user_liked_post_service = UserLikedPostService(service)
+	email_validation_service = EmailValidationService(service)
 
 	app = falcon.API(middleware=[HandleCORS()])
 	app.add_route('/add_post_to_category', add_post_service)
@@ -37,6 +41,7 @@ def start_service():
 	app.add_route('/comment', comment_service)
 	app.add_route('/user', user_service)
 	app.add_route('/user_liked_post', user_liked_post_service)
+	app.add_route('/email_validation', email_validation_service)
 	return app
 
 class HandleCORS(object):

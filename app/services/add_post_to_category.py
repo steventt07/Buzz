@@ -45,8 +45,8 @@ class AddPostService:
 		except psycopg2.DatabaseError as e:
 			if con:
 				con.rollback()
-			print ('Error %s' % e ) 
-			sys.exit(1)
+			print ('Error %s' % e )
+			raise falcon.HTTPBadRequest('Database error', str(e))
 		finally: 
 			if cursor:
 				cursor.close()

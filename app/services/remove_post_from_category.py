@@ -33,12 +33,10 @@ class RemovePostService:
 		except psycopg2.DatabaseError as e:
 			if con:
 				con.rollback()
-			resp.status = falcon.HTTP_400
-			print ('Error %s' % e ) 
+			raise falcon.HTTPBadRequest('Database error', str(e))
 			sys.exit(1)
 		finally:
 			if cursor:
-				resp.status = falcon.HTTP_400
 				cursor.close()
 			if con:
 				con.close()

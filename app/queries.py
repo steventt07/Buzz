@@ -135,7 +135,7 @@ QUERY_GET_USER = """
 	FROM
 		user_table
 	WHERE 
-		username = %s AND password = %s;
+		username = %s AND password = %s AND is_validated = true;
 		
 """
 
@@ -170,9 +170,10 @@ QUERY_INSERT_USER = """
 		username,
 		password,
 		email,
+		validation_code,
 		date_joined
 	)
-	VALUES (%s, %s, %s, %s);
+	VALUES (%s, %s, %s, %s, %s);
 """
 
 QUERY_INSERT_CATEGORY = """
@@ -218,6 +219,14 @@ QUERY_UPDATE_VOTE = """
 		direction = %s,
 		date_changed = %s
 	WHERE post_id = %s AND username = %s;
+"""
+
+QUERY_UPDATE_EMAIL_VERIFICATION = """
+	UPDATE 
+		user_table
+	SET
+		is_validated = true
+	WHERE email = %s AND validation_code = %s;
 """
 
 QUERY_INSERT_COMMENT = """
