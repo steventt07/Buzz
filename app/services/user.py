@@ -52,7 +52,7 @@ class UserService:
 			
 			resp.status = falcon.HTTP_200
 			resp.media = 'Successful creation of user: {}'.format(req.media['username'])
-			self.service.email_server.send_email(random_str)
+			self.service.email_server.send_email(req.media['email'],random_str)
 
 		except psycopg2.DatabaseError as e:
 			if con:
