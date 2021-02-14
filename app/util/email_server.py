@@ -25,7 +25,7 @@ class EmailServer:
 		msg = MIMEMultipart("alternative")
 		msg['Subject'] = "Bubble Email Validation"
 		msg['From'] = self.config['email']
-		msg['To'] = self.config['email']
+		msg['To'] = email
 		
 		
 		text = """
