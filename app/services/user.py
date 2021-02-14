@@ -13,7 +13,7 @@ class UserService:
 
 	def on_get(self, req, resp):
 		print('HTTP GET: /user')
-		
+		print(req.params)
 		self.service.dbconnection.init_db_connection()
 		cursor = self.service.dbconnection.connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 		cursor.execute(QUERY_GET_USER, (req.params['username'], req.params['password']))
