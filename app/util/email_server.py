@@ -18,9 +18,9 @@ class EmailServer:
 			config = yaml.load(filehandle.read(), Loader=Loader)
 			return config
 	
-	def send_email(self, email, verificaiton_code):
+	def send_email(self, username, email, verificaiton_code):
 		
-		#test_verification_link = "http://0.0.0.0:8000/email_validation?email={}&validation_code={}".format(email,verificaiton_code)
+		# verification_link = "http://0.0.0.0:8000/email_validation?email={}&validation_code={}".format(email,verificaiton_code)
 		verification_link = "https://dashboard.stocksandshare.com/chitchat/email_validation?email={}&validation_code={}".format(email,verificaiton_code)
 		print(verification_link)
 		msg = MIMEMultipart("alternative")
@@ -30,24 +30,24 @@ class EmailServer:
 		
 		
 		text = """
-		Congraduations for making a Bubble account!
+		Congraduations {} for making a Bubble account!
 		Please click the following link to verify your account: {}
 		
 		Thanks,
 		
 		Bubble Team
-		""".format(verification_link)
+		""".format(username,verification_link)
 		html = """
 		<html>
 		<body>
-			<p>Congraduations for making a Bubble account!<br><br>
+			<p>Congraduations {} for making a Bubble account!<br><br>
 			Please click the following link to verify your account: <a href="{}">Verify Account</a><br><br>
 			Thanks,<br><br>
 			Bubble Team
 			</p>
 		</body>
 		</html>
-		""".format(verification_link)
+		""".format(username,verification_link)
 		
 		part1 = MIMEText(text, "plain")
 		part2 = MIMEText(html, "html")
