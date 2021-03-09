@@ -30,7 +30,7 @@ class EmailServer:
 		
 		
 		text = """
-		Congraduations {} for making a Bubble account!
+		Congratulations {} for making a Bubble account!
 		Please click the following link to verify your account: {}
 		
 		Thanks,
@@ -40,7 +40,7 @@ class EmailServer:
 		html = """
 		<html>
 		<body>
-			<p>Congraduations {} for making a Bubble account!<br><br>
+			<p>Congratulations {} for making a Bubble account!<br><br>
 			Please click the following link to verify your account: <a href="{}">Verify Account</a><br><br>
 			Thanks,<br><br>
 			Bubble Team
