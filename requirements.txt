@@ -2,6 +2,6 @@ falcon==2.0.0
 uwsgi==2.0.18
 gevent==1.4.0
 gunicorn==19.9.0
-pyyaml==5.1.2
+pyyaml==5.4
 requests
 psycopg2-binary
